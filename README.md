@@ -1,6 +1,6 @@
 # profissa_app
 
-A new Flutter project.
+Projeto de avaliação - CRUD
 
 ## Getting Started
 
