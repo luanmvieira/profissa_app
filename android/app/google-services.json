@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "321654370224",
+    "project_id": "projeto-avaliativo-c9ee3",
+    "storage_bucket": "projeto-avaliativo-c9ee3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321654370224:android:ffeb9c165b3a400a8c3075",
+        "android_client_info": {
+          "package_name": "com.example.profissa_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321654370224-9heuqc6s0p5voobqghcqdf0gdtkm9s17.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhNJBnx0NbG7V115fjR_vlrPcCFZWsvA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321654370224-9heuqc6s0p5voobqghcqdf0gdtkm9s17.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "321654370224-6vr2d27n81gpeq28gfsreu9kl13nf3tc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.gabrielnarcisio.barberApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
