@@ -32,6 +32,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  assets:
+    - lib/app/assets/images/logo.png
+
+
 vars:
   clean: flutter clean
   get: flutter pub get

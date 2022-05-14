@@ -1,5 +1,5 @@
-import 'package:profissa_app/app/modules/login/login_Page.dart';
-import 'package:profissa_app/app/modules/login/login_store.dart';
+import 'package:profissa_app/app/modules/login/views/login_Page.dart';
+import 'package:profissa_app/app/modules/login/store/login_store.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LoginModule extends Module {
@@ -10,6 +10,6 @@ class LoginModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/login', child: (_, args) => LoginPage()),
+    ChildRoute('/', child: (_, args) => LoginPage()),
   ];
 }
