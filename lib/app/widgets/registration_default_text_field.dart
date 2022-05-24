@@ -1,35 +1,26 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomCPFTextFormField extends StatefulWidget {
-  final TextEditingController controller;
+class RegistrationDefaultTextField extends StatelessWidget {
   final String hintText;
-  final double fontSize;
-  final Color fillColor;
-  final Color borderColor;
-  final Color fontColor;
-  final TextInputType type;
+  final Function? onTapPassword;
+  final TextInputType textInputType;
+  final TextEditingController controller;
+  final List<TextInputFormatter>? textInputFormatter;
+  final Function? validation;
 
-
-  CustomCPFTextFormField(
+  const RegistrationDefaultTextField(
       {Key? key,
-        required this.controller,
-        this.fontSize = 3,
-        required this.borderColor,
-        required this.fontColor,
-        required this.fillColor,
-        required this.type,
         required this.hintText,
-        })
+        required this.textInputType,
+        required this.controller,
+        this.onTapPassword,
+        this.textInputFormatter,
+        this.validation,
+      })
       : super(key: key);
 
-  @override
-  State<CustomCPFTextFormField> createState() => _CustomCPFTextFormFieldState();
-}
-
-class _CustomCPFTextFormFieldState extends State<CustomCPFTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -37,18 +28,15 @@ class _CustomCPFTextFormFieldState extends State<CustomCPFTextFormField> {
         color: Colors.grey[700],
         fontSize: 17,
       ),
-      keyboardType: widget.type,
-      inputFormatters: [
-        FilteringTextInputFormatter.digitsOnly,
-        CpfOuCnpjFormatter(),
-      ],
+      keyboardType: textInputType,
+      inputFormatters: textInputFormatter,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      // validator: (value) => validation(value),
+      validator: (value) => validation!(value),
       cursorColor: Colors.black,
-      controller: widget.controller,
+      controller: controller,
       decoration: InputDecoration(
         hintStyle: TextStyle(color: Colors.black),
-        hintText: widget.hintText,
+        hintText: hintText,
         filled: true,
         fillColor: Colors.white.withOpacity(0.6),
         alignLabelWithHint: true,

@@ -1,32 +1,37 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:profissa_app/app/modules/registration/registration_store.dart';
+import 'package:profissa_app/app/modules/registration/store/registration_store.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationPage extends StatefulWidget {
+import '../../../widgets/customPasswordTextFormField.dart';
+import '../../../widgets/registration_default_text_field.dart';
 
-  const RegistrationPage({Key? key}) : super(key: key);
+class PersonalPage extends StatefulWidget {
+  const PersonalPage({Key? key}) : super(key: key);
+
   @override
-  _RegistrationPageState createState() => _RegistrationPageState();
+  _PersonalPageState createState() => _PersonalPageState();
 }
-class _RegistrationPageState extends ModularState<RegistrationPage,RegistrationStore> {
-  final RegistrationStore store = Modular.get();
+
+class _PersonalPageState
+    extends ModularState<PersonalPage, RegistrationStore> {
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          child:  Padding(
+          child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
             child: SafeArea(
               child: Column(
-                children: [
+                children: <Widget>[
                   Column(
                     children: [
                       Align(
@@ -40,9 +45,10 @@ class _RegistrationPageState extends ModularState<RegistrationPage,RegistrationS
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                icon: Icon(Icons.arrow_back, color: Colors.white70,)
-                            )
-                        ),
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color: Colors.white70,
+                                ))),
                       ),
                       Text(
                         "Cadastro",
@@ -70,7 +76,7 @@ class _RegistrationPageState extends ModularState<RegistrationPage,RegistrationS
                                   )),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   const Icon(
                                     Icons.person,
@@ -177,19 +183,96 @@ class _RegistrationPageState extends ModularState<RegistrationPage,RegistrationS
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          RegistrationDefaultTextField(
+                              hintText: "Nome Completo",
+                              textInputType: TextInputType.text,
+                              controller: controller.nameController,
+                              validation: (String value) {
+                                if (controller.validateNameField(value) ==
+                                    false) {
+                                  return 'Insira o seu Nome e Sobrenome';
+                                }
+                              }),
+                          SizedBox(height: 15),
+                          RegistrationDefaultTextField(
+                              hintText: "E-mail",
+                              textInputType: TextInputType.text,
+                              controller: controller.emailController,
+                              validation: (String value) {
+                                if (controller.validateEmailField(value) ==
+                                    false) {
+                                  return 'Insira o email correto';
+                                }
+                              }),
+                          SizedBox(height: 15),
+                          CustomPasswordTextFormField(
+                            controller: controller.senhaController,
+                            fillColor: Colors.grey,
+                            borderColor: Colors.black,
+                            fontColor: Colors.black,
+                            iconColor: Colors.black,
+                            fontSize: 18,
+                            validation: (String value) {
+                              if (controller.validatePasswordField(value) ==
+                                  false) {
+                                return 'A Senha deve conter pelo menos 08 caracteres';
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Column(
+                    children: [
+                      controller.nameController.text.isNotEmpty &&
+                      controller.emailController.text.isNotEmpty &&
+                      controller.senhaController.text.isNotEmpty
+                      ? FadeInDown(
+                        delay: Duration(milliseconds: 200),
+                        child: TextButton(
+                          child: Text(
+                          "Prosseguir",
+                          style: GoogleFonts.nunito(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: Colors.black,
+                          ),
+                        ),
+                          onPressed: (){
+                            if(controller.nameController.text.isEmpty &&
+                                controller.emailController.text.isEmpty &&
+                                controller.senhaController.text.isEmpty){
+                              print("Tem campo vazio");
+                            }
+                            else{
+                              Modular.to.pushNamed("/registration/address");
+                            }
+                          },
+                        ),
+                      )
+                          : Container(),
 
+                    ],
+                  )
                 ],
               ),
             ),
           ),
         ),
       ),
-
     );
   }
 }

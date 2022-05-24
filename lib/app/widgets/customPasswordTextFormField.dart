@@ -6,7 +6,6 @@ import '../assets/customIcons_shared.dart';
 
 class CustomPasswordTextFormField extends StatefulWidget {
   final TextEditingController controller;
-  final String labelText;
   final double fontSize;
   final Color iconColor;
   final Color fillColor;
@@ -14,9 +13,8 @@ class CustomPasswordTextFormField extends StatefulWidget {
   final Color fontColor;
   final Function validation;
 
-  CustomPasswordTextFormField({
-    Key? key,
-    required this.labelText,
+  const CustomPasswordTextFormField(
+  {Key? key,
     required this.controller,
     required this.fontSize,
     required this.fillColor,
@@ -24,6 +22,7 @@ class CustomPasswordTextFormField extends StatefulWidget {
     required this.fontColor,
     required this.iconColor,
     required this.validation,
+
   }) : super(key: key);
 
   @override
@@ -35,6 +34,8 @@ class _CustomPasswordTextFormFieldState
     extends State<CustomPasswordTextFormField> {
   bool hidePassword = true;
   Icon passwordIcon = Icon(CustomIcons.eye, color: Colors.black);
+
+
 
   void showPass() {
     if (hidePassword == true) {
@@ -49,16 +50,23 @@ class _CustomPasswordTextFormFieldState
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: GoogleFonts.nunito(
+        color: Colors.grey[700],
+        fontSize: 17,
+      ),
       keyboardType: TextInputType.visiblePassword,
-      textAlign: TextAlign.start,
-      controller: widget.controller,
-      obscureText: hidePassword,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) => widget.validation(value),
-      style: GoogleFonts.rhodiumLibre(
-          color: widget.fontColor, fontSize: widget.fontSize),
+      cursorColor: Colors.black,
+      controller: widget.controller,
+      obscureText: hidePassword,
       decoration: InputDecoration(
-        // ignore: deprecated_member_use
+        hintStyle: TextStyle(color: Colors.black),
+        hintText: "Senha",
+        filled: true,
+        fillColor: Colors.white.withOpacity(0.6),
+        alignLabelWithHint: true,
+        contentPadding:EdgeInsets.fromLTRB(20, 18, 20, 18),
         suffix: Padding(
           padding: const EdgeInsets.only(right: 10),
           child: GestureDetector(
@@ -70,19 +78,22 @@ class _CustomPasswordTextFormFieldState
             },
           ),
         ),
-        labelText: widget.labelText,
-        labelStyle: GoogleFonts.rhodiumLibre(
-          color: widget.fontColor,
-          fontSize: widget.fontSize - 2,
-        ),
-        filled: true,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(color: widget.borderColor),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide(color: widget.borderColor),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(18)),
+            borderSide: BorderSide(
+              width: 1.18,
+              color: Color(0xff1a1919),
+            ),
+          ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderSide: BorderSide(
+            width: 1.2,
+            color: Colors.black,
+          ), //Color(0xff1a1919)
         ),
       ),
     );

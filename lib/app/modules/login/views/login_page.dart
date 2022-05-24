@@ -65,7 +65,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: CustomCPFTextFormField(
-                    labelText: "CPF",
+                    hintText: "CPF",
                     controller: _loginCPFController,
                     fillColor: Colors.grey,
                     borderColor: Colors.black,
@@ -80,7 +80,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: CustomPasswordTextFormField(
-                    labelText: 'Senha',
                     controller: _loginPasswordController,
                     fillColor: Colors.grey,
                     borderColor: Colors.black,
