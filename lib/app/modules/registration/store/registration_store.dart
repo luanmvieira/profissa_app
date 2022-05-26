@@ -25,6 +25,26 @@ abstract class _RegistrationStoreBase with Store {
   final ufController = TextEditingController();
   //Professional Page
   final cpfController = TextEditingController();
+  String ocupationController = '';
+  String experienceController = '';
+  String serviceController = '';
+  final professionalCepController = TextEditingController();
+  final professionalLogradouroController = TextEditingController();
+  final professionalNumeroController = TextEditingController();
+  final professionalComplementoController = TextEditingController();
+  final professionalBairroController = TextEditingController();
+  final professionalCidadeController = TextEditingController();
+  final professionalUfController = TextEditingController();
+  //Service Page
+  final nameServiceController = TextEditingController();
+  final valueServiceController = TextEditingController();
+
+
+  @observable
+  bool isAthome = false;
+  @observable
+  bool isNewAddress = false;
+
 
   @observable
   List<String> typeOcupation = [
@@ -46,6 +66,34 @@ abstract class _RegistrationStoreBase with Store {
     'Local próprio'
   ];
 
+  List<String> typeServiceLocal =[
+    'Manter Endereço',
+    'Cadastrar Novo Endereço'
+  ];
+
+
+  @action
+  setOcupation(String ocupation){
+    ocupationController = ocupation;
+  }
+  @action
+  setExperience(String experience){
+    experienceController = experience;
+  }
+
+  @action
+  setService(String service){
+    serviceController = service;
+  }
+
+  @action
+  void changeService(bool value){
+    isAthome = value;
+  }
+  @action
+  void changeServiceLocal(bool value){
+    isNewAddress = value;
+  }
 
 
   bool validateEmailField(String email) {
@@ -88,20 +136,30 @@ abstract class _RegistrationStoreBase with Store {
     return false;
   }
   @action
-  retornarInfosCep(String cep) async {
+  retornarInfosCep(String cep,String page) async {
     print("Entrou na func");
 
     final getCep = await http.get(
       Uri.parse("https://viacep.com.br/ws/$cep/json/"),
     );
     print(getCep.statusCode);
-    if (getCep.statusCode == 200) {
+    if (getCep.statusCode == 200 && page=="address") {
       print("cod 200");
       var retornoCep = json.decode(getCep.body);
       logradouroController.text = retornoCep['logradouro'];
       bairroController.text = retornoCep['bairro'];
       cidadeController.text = retornoCep['localidade'];
       ufController.text = retornoCep['uf'];
+      Fluttertoast.showToast(msg:'CEP ENCONTRADO');
+      print(logradouroController.text);
+    }else
+    if (getCep.statusCode == 200 && page=="professional") {
+      print("cod 200");
+      var retornoCep = json.decode(getCep.body);
+      professionalLogradouroController.text = retornoCep['logradouro'];
+      professionalBairroController.text = retornoCep['bairro'];
+      professionalCidadeController.text = retornoCep['localidade'];
+      professionalUfController.text = retornoCep['uf'];
       Fluttertoast.showToast(msg:'CEP ENCONTRADO');
       print(logradouroController.text);
     }else

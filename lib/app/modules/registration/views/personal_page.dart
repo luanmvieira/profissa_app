@@ -252,14 +252,7 @@ class _PersonalPageState
                           ),
                         ),
                           onPressed: (){
-                            if(controller.nameController.text.isEmpty &&
-                                controller.emailController.text.isEmpty &&
-                                controller.senhaController.text.isEmpty){
-                              print("Tem campo vazio");
-                            }
-                            else{
-                              Modular.to.pushNamed("/registration/address");
-                            }
+                            Modular.to.pushNamed("/registration/address");
                           },
                         ),
                       )

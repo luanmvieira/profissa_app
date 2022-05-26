@@ -1,19 +1,20 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:profissa_app/app/modules/registration/store/registration_store.dart';
 import 'package:flutter/material.dart';
-import 'package:profissa_app/app/widgets/registration_default_text_field.dart';
 
-class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
+
+import '../../../widgets/registration_default_text_field.dart';
+
+class ServicePage extends StatefulWidget {
+  const ServicePage({Key? key}) : super(key: key);
 
   @override
-  _AddressPageState createState() => _AddressPageState();
+  _ServicePageState createState() => _ServicePageState();
 }
 
-class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
+class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -99,7 +100,7 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                             flex: 1,
                             child: Container(
                               height: 45,
-                              color: Colors.blueAccent,
+                              color: Colors.grey,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -109,7 +110,7 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                                   ),
                                   Flexible(
                                     child: Text(
-                                      "Endereço",
+                                      "",
                                       style: GoogleFonts.montserrat(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -152,7 +153,7 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                             child: Container(
                               height: 45,
                               decoration: const BoxDecoration(
-                                  color: Colors.grey,
+                                  color: Colors.blueAccent,
                                   borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(40.0),
                                     topRight: Radius.circular(40.0),
@@ -166,7 +167,7 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                                   ),
                                   Flexible(
                                     child: Text(
-                                      "",
+                                      "Serviço",
                                       style: GoogleFonts.montserrat(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
@@ -189,118 +190,25 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          TextFormField(
-                            style: GoogleFonts.nunito(
-                              color: Colors.grey[700],
-                              fontSize: 17,
-                            ),
-                            maxLength: 8,
-                            keyboardType: TextInputType.number,
-                            cursorColor: Colors.black,
-                            controller: controller.cepController,
-                            decoration: InputDecoration(
-                              suffix: Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: GestureDetector(
-                                  child: Icon(Icons.search),
-                                  onTap: () {
-                                    controller.retornarInfosCep(
-                                        controller.cepController.text,"address");
-                                  },
-                                ),
-                              ),
-                              hintStyle: TextStyle(color: Colors.black),
-                              hintText: "CEP",
-                              filled: true,
-                              fillColor: Colors.white.withOpacity(0.6),
-                              alignLabelWithHint: true,
-                              contentPadding:
-                                  const EdgeInsets.fromLTRB(20, 18, 20, 18),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
-                                borderSide: BorderSide(
-                                  width: 1.18,
-                                  color: Color(0xff1a1919),
-                                ),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(18)),
-                                borderSide: BorderSide(
-                                  width: 1.2,
-                                  color: Colors.black,
-                                ), //Color(0xff1a1919)
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 15),
                           RegistrationDefaultTextField(
-                              hintText: "Logradouro",
+                              hintText: "Nome do Serviço",
                               textInputType: TextInputType.text,
-                              controller: controller.logradouroController,
+                              controller: controller.nameServiceController,
                               validation: (String value) {
-                                if (controller.validateLogradouroField(value) ==
+                                if (controller.validateNameField(value) ==
                                     false) {
-                                  return 'Insira o logradouro corretamente';
+                                  return 'Insira o Nome do Serviço';
                                 }
                               }),
                           SizedBox(height: 15),
                           RegistrationDefaultTextField(
-                              hintText: "Número",
-                              textInputType: TextInputType.text,
-                              controller: controller.numeroController,
+                              hintText: "Valor do Serviço",
+                              textInputType: TextInputType.number,
+                              controller: controller.valueServiceController,
                               validation: (String value) {
-                                if (controller.validateNumeroField(value) ==
+                                if (controller.validateEmailField(value) ==
                                     false) {
-                                  return 'Insira o número corretamente';
-                                }
-                              }),
-                          SizedBox(height: 15),
-                          RegistrationDefaultTextField(
-                              hintText: "Complemento",
-                              textInputType: TextInputType.text,
-                              controller: controller.complementoController,
-                              validation: (String value) {
-                                if (controller.validateLogradouroField(value) ==
-                                    false) {
-                                  return 'Insira o complemento corretamente';
-                                }
-                              }),
-                          SizedBox(height: 15),
-                          RegistrationDefaultTextField(
-                              hintText: "Bairro",
-                              textInputType: TextInputType.text,
-                              controller: controller.bairroController,
-                              validation: (String value) {
-                                if (controller.validateLogradouroField(value) ==
-                                    false) {
-                                  return 'Insira o Bairro corretamente';
-                                }
-                              }),
-                          SizedBox(height: 15),
-                          RegistrationDefaultTextField(
-                              hintText: "Cidade",
-                              textInputType: TextInputType.text,
-                              controller: controller.cidadeController,
-                              validation: (String value) {
-                                if (controller.validateLogradouroField(value) ==
-                                    false) {
-                                  return 'Insira a Cidade corretamente';
-                                }
-                              }),
-                          SizedBox(height: 15),
-                          RegistrationDefaultTextField(
-                              hintText: "UF",
-                              textInputType: TextInputType.text,
-                              controller: controller.ufController,
-                              validation: (String value) {
-                                if (controller.validateUfField(value) ==
-                                    false) {
-                                  return 'Insira o UF completo';
+                                  return 'Insira o email correto';
                                 }
                               }),
                         ],
@@ -312,13 +220,8 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                   ),
                   Column(
                     children: [
-                      controller.cepController.text.isNotEmpty &&
-                              controller.logradouroController.text.isNotEmpty &&
-                              controller.numeroController.text.isNotEmpty &&
-                              controller.complementoController.text.isNotEmpty &&
-                              controller.bairroController.text.isNotEmpty &&
-                              controller.cidadeController.text.isNotEmpty &&
-                          controller.ufController.text.isNotEmpty
+                      controller.nameServiceController.text.isNotEmpty &&
+                              controller.valueServiceController.text.isNotEmpty
                           ? FadeInDown(
                               delay: Duration(milliseconds: 200),
                               child: TextButton(
@@ -331,7 +234,7 @@ class _AddressPageState extends ModularState<AddressPage, RegistrationStore> {
                                   ),
                                 ),
                                 onPressed: () {
-                                  Modular.to.pushNamed("/registration/professional");
+
                                 },
                               ),
                             )
