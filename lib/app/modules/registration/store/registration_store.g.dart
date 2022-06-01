@@ -9,6 +9,54 @@ part of 'registration_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegistrationStore on _RegistrationStoreBase, Store {
+  late final _$usuarioAtom =
+      Atom(name: '_RegistrationStoreBase.usuario', context: context);
+
+  @override
+  UserModel get usuario {
+    _$usuarioAtom.reportRead();
+    return super.usuario;
+  }
+
+  @override
+  set usuario(UserModel value) {
+    _$usuarioAtom.reportWrite(value, super.usuario, () {
+      super.usuario = value;
+    });
+  }
+
+  late final _$resultAtom =
+      Atom(name: '_RegistrationStoreBase.result', context: context);
+
+  @override
+  bool get result {
+    _$resultAtom.reportRead();
+    return super.result;
+  }
+
+  @override
+  set result(bool value) {
+    _$resultAtom.reportWrite(value, super.result, () {
+      super.result = value;
+    });
+  }
+
+  late final _$textResultAtom =
+      Atom(name: '_RegistrationStoreBase.textResult', context: context);
+
+  @override
+  String get textResult {
+    _$textResultAtom.reportRead();
+    return super.textResult;
+  }
+
+  @override
+  set textResult(String value) {
+    _$textResultAtom.reportWrite(value, super.textResult, () {
+      super.textResult = value;
+    });
+  }
+
   late final _$isAthomeAtom =
       Atom(name: '_RegistrationStoreBase.isAthome', context: context);
 
@@ -55,6 +103,14 @@ mixin _$RegistrationStore on _RegistrationStoreBase, Store {
     _$typeOcupationAtom.reportWrite(value, super.typeOcupation, () {
       super.typeOcupation = value;
     });
+  }
+
+  late final _$CadastrarUserAsyncAction =
+      AsyncAction('_RegistrationStoreBase.CadastrarUser', context: context);
+
+  @override
+  Future CadastrarUser() {
+    return _$CadastrarUserAsyncAction.run(() => super.CadastrarUser());
   }
 
   late final _$retornarInfosCepAsyncAction =
@@ -127,6 +183,9 @@ mixin _$RegistrationStore on _RegistrationStoreBase, Store {
   @override
   String toString() {
     return '''
+usuario: ${usuario},
+result: ${result},
+textResult: ${textResult},
 isAthome: ${isAthome},
 isNewAddress: ${isNewAddress},
 typeOcupation: ${typeOcupation}

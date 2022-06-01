@@ -15,10 +15,6 @@ class LoginPage extends StatefulWidget {
 
 
 class _LoginPageState extends ModularState<LoginPage, LoginStore> {
-  @override
-  final LoginStore store = Modular.get();
-  final TextEditingController _loginCPFController = TextEditingController();
-  final TextEditingController _loginPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +62,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: CustomCPFTextFormField(
                     hintText: "CPF",
-                    controller: _loginCPFController,
+                    controller: controller.loginCPFController,
                     fillColor: Colors.grey,
                     borderColor: Colors.black,
                     fontColor: Colors.black,
@@ -80,7 +76,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: CustomPasswordTextFormField(
-                    controller: _loginPasswordController,
+                    controller: controller.loginPasswordController,
                     fillColor: Colors.grey,
                     borderColor: Colors.black,
                     fontColor: Colors.black,
@@ -142,6 +138,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                               fontWeight: FontWeight.normal),
                     ),
                       onPressed: (){
+                        store.RealizarLogin();
+                        if (store.resultLogin == true) {
+                          Modular.to.navigate('/home');
+                        }
+
 
                       }),
                   ),

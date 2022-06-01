@@ -43,7 +43,7 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.arrow_back,
                                   color: Colors.white70,
                                 ))),
@@ -181,7 +181,7 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
@@ -194,28 +194,19 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                               hintText: "Nome do Serviço",
                               textInputType: TextInputType.text,
                               controller: controller.nameServiceController,
-                              validation: (String value) {
-                                if (controller.validateNameField(value) ==
-                                    false) {
-                                  return 'Insira o Nome do Serviço';
-                                }
-                              }),
-                          SizedBox(height: 15),
+                              ),
+
+                          const SizedBox(height: 15),
                           RegistrationDefaultTextField(
                               hintText: "Valor do Serviço",
                               textInputType: TextInputType.number,
                               controller: controller.valueServiceController,
-                              validation: (String value) {
-                                if (controller.validateEmailField(value) ==
-                                    false) {
-                                  return 'Insira o email correto';
-                                }
-                              }),
+                              ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Column(
@@ -223,7 +214,7 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                       controller.nameServiceController.text.isNotEmpty &&
                               controller.valueServiceController.text.isNotEmpty
                           ? FadeInDown(
-                              delay: Duration(milliseconds: 200),
+                              delay: const Duration(milliseconds: 200),
                               child: TextButton(
                                 child: Text(
                                   "Prosseguir",
@@ -234,7 +225,6 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                                   ),
                                 ),
                                 onPressed: () {
-
                                 },
                               ),
                             )

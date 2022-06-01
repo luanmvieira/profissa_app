@@ -1,26 +1,28 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
-  final String username;
-  final String email;
-  final String password;
-  final String cep;
-  final String logradouro;
-  final String numero;
-  final String complemento;
-  final String bairro;
-  final String cidade;
-  final String uf;
-  final String cpf;
-  final String typeService;
-  final String typeOcupation;
-  final String experience;
-  final String professionalCep;
-  final String professionalLogradouro;
-  final String professionalNumero;
-  final String professionalComplemento;
-  final String professionalBairro;
-  final String professionalCidade;
-  final String professionalUf;
+  String username;
+  String email;
+  String password;
+  String cep;
+  String logradouro;
+  String numero;
+  String complemento;
+  String bairro;
+  String cidade;
+  String uf;
+  String cpf;
+  String typeService;
+  String typeOcupation;
+  String experience;
+  String professionalCep;
+  String professionalLogradouro;
+  String professionalNumero;
+  String professionalComplemento;
+  String professionalBairro;
+  String professionalCidade;
+  String professionalUf;
 
   UserModel({
     this.username = '',
@@ -50,7 +52,7 @@ class UserModel {
   Map<String, dynamic> toMap(){
     Map<String, dynamic> map = {
       "nome"                    : this.username,
-      "email"                   : this.password,
+      "email"                   : this.email,
       "cep"                     : this.cep,
       "logradouro"              : this.logradouro,
       "numero"                  : this.numero,
@@ -61,7 +63,7 @@ class UserModel {
       "cpf"                     : this.cpf,
       "typeService"             : this.typeService,
       "typeOcupation"           : this.typeOcupation,
-      "expericence"             : this.experience,
+      "experience"             : this.experience,
       "professionalCep"         : this.professionalCep,
       "professionalLogradouro"  : this.professionalLogradouro,
       "professionalNumero"      : this.professionalNumero,
@@ -75,12 +77,12 @@ class UserModel {
 
   }
 
-  factory UserModel.fromMap(Map<String, dynamic>  doc) {
+  factory UserModel.fromMap(DocumentSnapshot doc) {
     return UserModel(
       username: doc['nome'],
       email: doc['email'],
       cep: doc['cep'],
-      logradouro: doc['logradouto'],
+      logradouro: doc['logradouro'],
       numero: doc['numero'],
       complemento: doc['complemento'],
       bairro: doc['bairro'],

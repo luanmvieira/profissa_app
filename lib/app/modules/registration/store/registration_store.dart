@@ -1,15 +1,21 @@
 import 'dart:convert';
 
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
+import 'package:profissa_app/app/models/user_model.dart';
+import 'package:profissa_app/app/modules/registration/repositories/db_registration.dart';
 
 part 'registration_store.g.dart';
 
 class RegistrationStore = _RegistrationStoreBase with _$RegistrationStore;
 abstract class _RegistrationStoreBase with Store {
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+  ConexaoFirebaseCadastro dbCadastro = ConexaoFirebaseCadastro();
 
   //Personal Page
   final nameController = TextEditingController();
@@ -38,6 +44,14 @@ abstract class _RegistrationStoreBase with Store {
   //Service Page
   final nameServiceController = TextEditingController();
   final valueServiceController = TextEditingController();
+
+  @observable
+  UserModel usuario = UserModel();
+
+  @observable
+  bool result = false;
+  @observable
+  String textResult = '';
 
 
   @observable
@@ -93,6 +107,71 @@ abstract class _RegistrationStoreBase with Store {
   @action
   void changeServiceLocal(bool value){
     isNewAddress = value;
+  }
+
+  @action
+  CadastrarUser () async {
+    dynamic resultCadastro = false;
+    if(isNewAddress==false){
+      usuario.username = nameController.text;
+      usuario.email = emailController.text;
+      usuario.password = senhaController.text;
+      usuario.cep  = cepController.text;
+      usuario.logradouro = logradouroController.text;
+      usuario.numero = numeroController.text;
+      usuario.complemento = complementoController.text;
+      usuario.bairro = bairroController.text;
+      usuario.cidade = cidadeController.text;
+      usuario.uf = ufController.text;
+      usuario.cpf = cpfController.text;
+      usuario.typeService = serviceController;
+      usuario.typeOcupation = ocupationController;
+      usuario.experience = experienceController;
+      usuario.professionalCep = cepController.text;
+      usuario.professionalLogradouro = logradouroController.text;
+      usuario.professionalNumero = numeroController.text;
+      usuario.professionalComplemento = complementoController.text;
+      usuario.professionalBairro = bairroController.text;
+      usuario.professionalCidade = cidadeController.text;
+      usuario.professionalUf = ufController.text;
+    }else
+      if(isNewAddress==true){
+        usuario.username = nameController.text;
+        usuario.email = emailController.text;
+        usuario.password = senhaController.text;
+        usuario.cep  = cepController.text;
+        usuario.logradouro = logradouroController.text;
+        usuario.numero = numeroController.text;
+        usuario.complemento = complementoController.text;
+        usuario.bairro = bairroController.text;
+        usuario.cidade = cidadeController.text;
+        usuario.uf = ufController.text;
+        usuario.cpf = cpfController.text;
+        usuario.typeService = serviceController;
+        usuario.typeOcupation = ocupationController;
+        usuario.experience = experienceController;
+        usuario.professionalCep = professionalCepController.text;
+        usuario.professionalLogradouro = professionalLogradouroController.text;
+        usuario.professionalNumero = professionalNumeroController.text;
+        usuario.professionalComplemento = professionalComplementoController.text;
+        usuario.professionalBairro = professionalBairroController.text;
+        usuario.professionalCidade = professionalCidadeController.text;
+        usuario.professionalUf = professionalUfController.text;
+      }
+
+      resultCadastro = await dbCadastro.CadastraUsuario(usuario);
+    if (resultCadastro != true) {
+      print("----------Error ao criar User");
+      result = false;
+      textResult =
+      "Alerta!!!\n\nErro ao realizar cadastro, verifique os dados e tente novamente!\n";
+    } else {
+      Fluttertoast.showToast(msg:'CADASTRO EFETUADO COM SUCESSO');
+      print("novo usuario criado com sucesso:" + usuario.email.toString());
+      print("---------Sucesso");
+      result = true;
+      textResult = "";
+    }
   }
 
 
