@@ -9,6 +9,55 @@ part of 'registration_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$RegistrationStore on _RegistrationStoreBase, Store {
+  late final _$photoServiceControllerAtom = Atom(
+      name: '_RegistrationStoreBase.photoServiceController', context: context);
+
+  @override
+  String get photoServiceController {
+    _$photoServiceControllerAtom.reportRead();
+    return super.photoServiceController;
+  }
+
+  @override
+  set photoServiceController(String value) {
+    _$photoServiceControllerAtom
+        .reportWrite(value, super.photoServiceController, () {
+      super.photoServiceController = value;
+    });
+  }
+
+  late final _$imageAtom =
+      Atom(name: '_RegistrationStoreBase.image', context: context);
+
+  @override
+  XFile? get image {
+    _$imageAtom.reportRead();
+    return super.image;
+  }
+
+  @override
+  set image(XFile? value) {
+    _$imageAtom.reportWrite(value, super.image, () {
+      super.image = value;
+    });
+  }
+
+  late final _$uploadingAtom =
+      Atom(name: '_RegistrationStoreBase.uploading', context: context);
+
+  @override
+  bool get uploading {
+    _$uploadingAtom.reportRead();
+    return super.uploading;
+  }
+
+  @override
+  set uploading(bool value) {
+    _$uploadingAtom.reportWrite(value, super.uploading, () {
+      super.uploading = value;
+    });
+  }
+
   late final _$usuarioAtom =
       Atom(name: '_RegistrationStoreBase.usuario', context: context);
 
@@ -25,19 +74,51 @@ mixin _$RegistrationStore on _RegistrationStoreBase, Store {
     });
   }
 
-  late final _$resultAtom =
-      Atom(name: '_RegistrationStoreBase.result', context: context);
+  late final _$serviceAtom =
+      Atom(name: '_RegistrationStoreBase.service', context: context);
 
   @override
-  bool get result {
-    _$resultAtom.reportRead();
-    return super.result;
+  ServiceModel get service {
+    _$serviceAtom.reportRead();
+    return super.service;
   }
 
   @override
-  set result(bool value) {
-    _$resultAtom.reportWrite(value, super.result, () {
-      super.result = value;
+  set service(ServiceModel value) {
+    _$serviceAtom.reportWrite(value, super.service, () {
+      super.service = value;
+    });
+  }
+
+  late final _$resultUsuarioAtom =
+      Atom(name: '_RegistrationStoreBase.resultUsuario', context: context);
+
+  @override
+  bool get resultUsuario {
+    _$resultUsuarioAtom.reportRead();
+    return super.resultUsuario;
+  }
+
+  @override
+  set resultUsuario(bool value) {
+    _$resultUsuarioAtom.reportWrite(value, super.resultUsuario, () {
+      super.resultUsuario = value;
+    });
+  }
+
+  late final _$resulServiceAtom =
+      Atom(name: '_RegistrationStoreBase.resulService', context: context);
+
+  @override
+  bool get resulService {
+    _$resulServiceAtom.reportRead();
+    return super.resulService;
+  }
+
+  @override
+  set resulService(bool value) {
+    _$resulServiceAtom.reportWrite(value, super.resulService, () {
+      super.resulService = value;
     });
   }
 
@@ -105,12 +186,46 @@ mixin _$RegistrationStore on _RegistrationStoreBase, Store {
     });
   }
 
+  late final _$getImageAsyncAction =
+      AsyncAction('_RegistrationStoreBase.getImage', context: context);
+
+  @override
+  Future<XFile?> getImage() {
+    return _$getImageAsyncAction.run(() => super.getImage());
+  }
+
+  late final _$uploadAsyncAction =
+      AsyncAction('_RegistrationStoreBase.upload', context: context);
+
+  @override
+  Future<UploadTask> upload(String path) {
+    return _$uploadAsyncAction.run(() => super.upload(path));
+  }
+
+  late final _$pickAndUploadImageAsyncAction = AsyncAction(
+      '_RegistrationStoreBase.pickAndUploadImage',
+      context: context);
+
+  @override
+  Future pickAndUploadImage() {
+    return _$pickAndUploadImageAsyncAction
+        .run(() => super.pickAndUploadImage());
+  }
+
   late final _$CadastrarUserAsyncAction =
       AsyncAction('_RegistrationStoreBase.CadastrarUser', context: context);
 
   @override
   Future CadastrarUser() {
     return _$CadastrarUserAsyncAction.run(() => super.CadastrarUser());
+  }
+
+  late final _$CadastrarServiceAsyncAction =
+      AsyncAction('_RegistrationStoreBase.CadastrarService', context: context);
+
+  @override
+  Future CadastrarService() {
+    return _$CadastrarServiceAsyncAction.run(() => super.CadastrarService());
   }
 
   late final _$retornarInfosCepAsyncAction =
@@ -183,8 +298,13 @@ mixin _$RegistrationStore on _RegistrationStoreBase, Store {
   @override
   String toString() {
     return '''
+photoServiceController: ${photoServiceController},
+image: ${image},
+uploading: ${uploading},
 usuario: ${usuario},
-result: ${result},
+service: ${service},
+resultUsuario: ${resultUsuario},
+resulService: ${resulService},
 textResult: ${textResult},
 isAthome: ${isAthome},
 isNewAddress: ${isNewAddress},

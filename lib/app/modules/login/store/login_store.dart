@@ -17,7 +17,10 @@ abstract class _LoginStoreBase with Store {
 
   @observable
   UserModel usuario = UserModel();
-  dynamic resultLogin = false;
+  @observable
+  bool resultLogin = false;
+  @observable
+  bool progressLogin = false;
 
 
   @observable
@@ -37,6 +40,7 @@ abstract class _LoginStoreBase with Store {
 
   @action
   Future RealizarLogin() async {
+    progressLogin = true;
     usuarioLogin = await dblogin.getUserData(loginCPFController.text);
     usuario.email = usuarioLogin.email;
     usuario.password = loginPasswordController.text;
@@ -46,6 +50,7 @@ abstract class _LoginStoreBase with Store {
     } else {
       Fluttertoast.showToast(msg: 'LOGIN EFETUADO COM SUCESSO');
     }
+    progressLogin = false;
   }
 
   @action

@@ -25,6 +25,14 @@ mixin _$HomeStore on HomeStoreBase, Store {
     });
   }
 
+  late final _$logOutAsyncAction =
+      AsyncAction('HomeStoreBase.logOut', context: context);
+
+  @override
+  Future<dynamic> logOut() {
+    return _$logOutAsyncAction.run(() => super.logOut());
+  }
+
   @override
   String toString() {
     return '''

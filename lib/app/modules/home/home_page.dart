@@ -13,6 +13,13 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.exit_to_app_sharp),
+          onPressed: (){
+              store.logOut();
+          }),
+        ],
       ),
     );
   }

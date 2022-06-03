@@ -10,10 +10,7 @@ class ConexaoFirebaseCadastro {
     try {
       await auth.createUserWithEmailAndPassword(
           email: user.email, password: user.password);
-      db
-          .collection("usuarios")
-          .doc(user.cpf)
-          .set(user.toMap());
+      db.collection("usuarios").doc(user.cpf).set(user.toMap());
       return true;
     } catch (error) {
       print("erro ao criar user" + error.toString());

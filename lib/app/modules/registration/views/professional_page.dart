@@ -566,11 +566,8 @@ class _ProfessionalPageState
                                     color: Colors.black,
                                   ),
                                 ),
-                                  onPressed: () async {
-                                    await store.CadastrarUser();
-                                    if (store.result == true) {
-                                      Modular.to.navigate('/');
-                                    }
+                                  onPressed: () {
+                                    Modular.to.navigate('/registration/service');
 
                                   }
                               ),

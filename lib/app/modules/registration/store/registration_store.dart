@@ -1,13 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
+import 'package:profissa_app/app/models/service_model.dart';
 import 'package:profissa_app/app/models/user_model.dart';
 import 'package:profissa_app/app/modules/registration/repositories/db_registration.dart';
+import 'package:profissa_app/app/modules/registration/repositories/db_service.dart';
 
 part 'registration_store.g.dart';
 
@@ -16,6 +22,8 @@ abstract class _RegistrationStoreBase with Store {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   ConexaoFirebaseCadastro dbCadastro = ConexaoFirebaseCadastro();
+  ConexaoFirebaseCadastroService dbService = ConexaoFirebaseCadastroService();
+  FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   //Personal Page
   final nameController = TextEditingController();
@@ -44,12 +52,23 @@ abstract class _RegistrationStoreBase with Store {
   //Service Page
   final nameServiceController = TextEditingController();
   final valueServiceController = TextEditingController();
+  @observable
+  String photoServiceController = '';
+  @observable
+  XFile? image;
+  @observable
+  bool uploading = false;
+
 
   @observable
   UserModel usuario = UserModel();
+  @observable
+  ServiceModel service = ServiceModel();
 
   @observable
-  bool result = false;
+  bool resultUsuario = false;
+  @observable
+  bool resulService = false;
   @observable
   String textResult = '';
 
@@ -109,6 +128,89 @@ abstract class _RegistrationStoreBase with Store {
     isNewAddress = value;
   }
 
+  bool validateEmailField(String email) {
+    return EmailValidator.validate(email);
+  }
+
+  bool validatePasswordField(String password) {
+    if (password != null && password.length != 0 && password.length >= 8)
+      return true;
+
+    return false;
+  }
+
+  bool validateNameField(String name) {
+    if (name != null && name.length != 0 && name.length > 6) return true;
+
+    return false;
+  }
+
+  bool validateCepField(String cep) {
+    if (cep != null && cep.length != 0 && cep.length > 7) return true;
+
+    return false;
+  }
+
+  bool validateLogradouroField(String logradouro) {
+    if (logradouro != null && logradouro.length != 0 && logradouro.length > 3) return true;
+
+    return false;
+  }
+
+  bool validateNumeroField(String numero) {
+    if (numero != null && numero.length != 0 && numero.length >= 1) return true;
+
+    return false;
+  }
+  bool validateUfField(String uf) {
+    if (uf != null && uf.length != 0 && uf.length > 1) return true;
+
+    return false;
+  }
+  bool validateServiceField(String uf) {
+    if (uf != null && uf.length != 0 && uf.length > 3) return true;
+
+    return false;
+  }
+  bool validateValueField(String uf) {
+    if (uf != null && uf.length != 0 && uf.length >= 1) return true;
+
+    return false;
+  }
+
+  @action
+  Future<XFile?> getImage() async {
+    final ImagePicker _picker = ImagePicker();
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+  ///Ação para realizar o upload no storage
+  @action
+  Future<UploadTask> upload(String path) async {
+    File file = File(path);
+    try {
+      String ref = "usuarios/servicos/${Timestamp.now().millisecondsSinceEpoch}";
+      return _firebaseStorage.ref(ref).putFile(file);
+    } on FirebaseException catch (e) {
+      throw Exception('Erro no upload: ${e.code}');
+    }
+  }
+  ///Ação que junta as duas funções acima e gera o link da imagem para exibição
+  @action
+  pickAndUploadImage() async {
+    XFile? file = await getImage();
+    if (file != null) {
+      UploadTask task = await upload(file.path);
+      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
+        if (snapshot.state == TaskState.running) {
+          uploading = true;
+        } else if (snapshot.state == TaskState.success) {
+          photoServiceController = await snapshot.ref.getDownloadURL();
+          uploading = false;
+        }
+      });
+    }
+  }
   @action
   CadastrarUser () async {
     dynamic resultCadastro = false;
@@ -162,58 +264,41 @@ abstract class _RegistrationStoreBase with Store {
       resultCadastro = await dbCadastro.CadastraUsuario(usuario);
     if (resultCadastro != true) {
       print("----------Error ao criar User");
-      result = false;
+      resultUsuario = false;
       textResult =
       "Alerta!!!\n\nErro ao realizar cadastro, verifique os dados e tente novamente!\n";
     } else {
       Fluttertoast.showToast(msg:'CADASTRO EFETUADO COM SUCESSO');
       print("novo usuario criado com sucesso:" + usuario.email.toString());
       print("---------Sucesso");
-      result = true;
+      resultUsuario = true;
+      textResult = "";
+    }
+  }
+  @action
+  CadastrarService() async {
+    dynamic resultService = false;
+    service.cpf = cpfController.text;
+    service.name = nameServiceController.text;
+    service.value = valueServiceController.text;
+    service.photo = photoServiceController;
+    resultService = await dbService.CadastraService(service);
+    if (resultService != true) {
+      print("----------Error ao criar User");
+      resulService = false;
+      textResult = "Alerta!!!\n\nErro ao realizar cadastro, verifique os dados e tente novamente!\n";
+    } else {
+      Fluttertoast.showToast(msg:'CADASTRO EFETUADO COM SUCESSO');
+      print("novo serviço criado com sucesso:" + service.name);
+      print("---------Sucesso");
+      resulService = true;
       textResult = "";
     }
   }
 
 
-  bool validateEmailField(String email) {
-    return EmailValidator.validate(email);
-  }
 
-  bool validatePasswordField(String password) {
-    if (password != null && password.length != 0 && password.length >= 8)
-      return true;
 
-    return false;
-  }
-
-  bool validateNameField(String name) {
-    if (name != null && name.length != 0 && name.length > 6) return true;
-
-    return false;
-  }
-
-  bool validateCepField(String cep) {
-    if (cep != null && cep.length != 0 && cep.length > 7) return true;
-
-    return false;
-  }
-
-  bool validateLogradouroField(String logradouro) {
-    if (logradouro != null && logradouro.length != 0 && logradouro.length > 3) return true;
-
-    return false;
-  }
-
-  bool validateNumeroField(String numero) {
-    if (numero != null && numero.length != 0 && numero.length > 1) return true;
-
-    return false;
-  }
-  bool validateUfField(String uf) {
-    if (uf != null && uf.length != 0 && uf.length > 1) return true;
-
-    return false;
-  }
   @action
   retornarInfosCep(String cep,String page) async {
     print("Entrou na func");

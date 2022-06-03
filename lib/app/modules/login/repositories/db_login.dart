@@ -26,4 +26,9 @@ class ConexaoFirebaseLogin {
       print("Logar usuario: erro " + error.toString());
     }
   }
+
+  Future logout() async {
+    await auth.signOut();
+    return true;
+  }
 }

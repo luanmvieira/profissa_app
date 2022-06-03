@@ -6,9 +6,7 @@ class ConexaoFirebaseCadastroService {
 
   Future CadastraService(ServiceModel service) async {
     try {
-      await db.collection("servicos")
-          .doc()
-          .set(service.toMap());
+      await db.collection("servicos").doc().set(service.toMap());
       return true;
     } catch (error) {
       print("erro ao cadastrar serviço" + error.toString());
