@@ -84,7 +84,7 @@ abstract class _RegistrationStoreBase with Store {
     'Barbeiro',
     'Cabelereiro',
     'Esteticista',
-    'Nail Designer / Manuicure e Pedicure'
+    'Nail Designer'
   ];
 
   List<String> timeExperience = [

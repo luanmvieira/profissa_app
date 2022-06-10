@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:profissa_app/app/modules/home/home_page.dart';
-import 'package:profissa_app/app/modules/home/home_store.dart';
+import 'package:profissa_app/app/modules/home/views/home_page.dart';
+import 'package:profissa_app/app/modules/home/store/home_store.dart';
 
 
 

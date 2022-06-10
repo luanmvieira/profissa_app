@@ -30,7 +30,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
         builder: (_) => FadeInUp(
           animate: true,
           duration: const Duration(milliseconds: 220),
-          child: controller.progressLogin?
+          child: controller.progressLogin ?
           Container(
               alignment: Alignment.center,
               margin: const EdgeInsets.only(top: 20),

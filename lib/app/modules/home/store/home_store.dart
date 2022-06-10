@@ -1,6 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
+import 'package:profissa_app/app/models/user_model.dart';
+import 'package:profissa_app/app/modules/home/repositories/db_home.dart';
 import 'package:profissa_app/app/modules/login/repositories/db_login.dart';
 
 part 'home_store.g.dart';
@@ -8,13 +10,33 @@ part 'home_store.g.dart';
 class HomeStore = HomeStoreBase with _$HomeStore;
 ConexaoFirebaseLogin _dbloginHome = ConexaoFirebaseLogin();
 
+
 abstract class HomeStoreBase with Store {
   @observable
-  int counter = 0;
   bool logOutstate = false;
+  @observable
+  bool getValidator = false;
+  @observable
+  List<UserModel> usuariosList = [];
 
-  Future<void> increment() async {
-    counter = counter + 1;
+  ConexaoFirebaseHome homeRepositories = ConexaoFirebaseHome();
+
+  List<String> typeSort =[
+    'Nome',
+    'Tempo de Experiencia',
+    'Tipo de Atendimento'
+  ];
+
+  @action
+  Future<void> getFuncionarios() async {
+    getValidator = true;
+    usuariosList = await homeRepositories.getUserData();
+    getValidator = false;
+  }
+
+  @action
+  Future<void> sortFuncionarios(String condicao) async {
+    usuariosList = await homeRepositories.sort(condicao);
   }
 
   @action

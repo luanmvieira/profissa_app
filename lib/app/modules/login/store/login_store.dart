@@ -54,7 +54,7 @@ abstract class _LoginStoreBase with Store {
   }
 
   @action
-  Future VerificarUserLogado() async {
+  Future VerificarUserLogado()  async {
     User? user = auth.currentUser;
     if (user != null) {
       Modular.to.navigate('/home/');

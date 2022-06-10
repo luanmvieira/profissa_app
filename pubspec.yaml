@@ -46,6 +46,10 @@ flutter:
 
   assets:
     - lib/app/assets/images/logo.png
+    - lib/app/assets/images/barbeiro.png
+    - lib/app/assets/images/cabeleireiro.png
+    - lib/app/assets/images/esteticista.png
+    - lib/app/assets/images/Manicure.png
 
 
 vars:
