@@ -40,10 +40,8 @@ class _CustomPasswordTextFormFieldState
   void showPass() {
     if (hidePassword == true) {
       hidePassword = false;
-      passwordIcon = Icon(CustomIcons.eye, color: widget.iconColor);
     } else if (hidePassword == false) {
       hidePassword = true;
-      passwordIcon = Icon(CustomIcons.eye_off, color: widget.iconColor);
     }
   }
 
@@ -70,7 +68,7 @@ class _CustomPasswordTextFormFieldState
         suffix: Padding(
           padding: const EdgeInsets.only(right: 10),
           child: GestureDetector(
-            child: Icon(passwordIcon.icon),
+            child: Icon(Icons.remove_red_eye_outlined),
             onTap: () {
               setState(() {
                 showPass();

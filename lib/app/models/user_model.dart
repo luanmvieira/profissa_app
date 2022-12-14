@@ -63,7 +63,7 @@ class UserModel {
       "cpf"                     : this.cpf,
       "typeService"             : this.typeService,
       "typeOcupation"           : this.typeOcupation,
-      "experience"             : this.experience,
+      "experience"              : this.experience,
       "professionalCep"         : this.professionalCep,
       "professionalLogradouro"  : this.professionalLogradouro,
       "professionalNumero"      : this.professionalNumero,

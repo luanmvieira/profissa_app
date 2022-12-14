@@ -108,27 +108,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                   Container(
                     height: 10,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: GestureDetector(
-                        child: Text(
-                          'Esqueci minha senha',
-                          style: GoogleFonts.rhodiumLibre(
-                              color: Colors.grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        onTap: () {
-
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 10,
-                  ),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(35),
                     child: Container(
@@ -158,7 +137,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginStore> {
                           if (store.resultLogin == true) {
                             Modular.to.navigate('/home/');
                           }
-
 
                         }),
                     ),

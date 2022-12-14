@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:profissa_app/app/models/user_model.dart';
 import 'package:profissa_app/app/modules/home/store/home_store.dart';
+import 'package:profissa_app/app/widgets/showdialog_usuario.dart';
 import 'package:profissa_app/app/widgets/showdialogfilter.dart';
 import 'package:profissa_app/app/widgets/usuariosInfoCard.dart';
 
@@ -42,14 +43,11 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
           )
         ],
       ),
+
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            ListTile(
-              title: const Text('Perfil'),
-              onTap: () {},
-            ),
             ListTile(
               title: const Text('Sair'),
               onTap: () {
@@ -78,12 +76,36 @@ class _HomePageState extends ModularState<HomePage, HomeStore> {
                                   controller.usuariosList[index];
                               return Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: UsuariosInfoCard(
-                                  bairro: _usuario.professionalBairro,
-                                  nome: _usuario.username,
-                                  typeOcupation: _usuario.typeOcupation,
-                                  typeService: _usuario.typeService,
-                                  experience: _usuario.experience,
+                                child: GestureDetector(
+                                  child: UsuariosInfoCard(
+                                    bairro: _usuario.professionalBairro,
+                                    nome: _usuario.username,
+                                    typeOcupation: _usuario.typeOcupation,
+                                    typeService: _usuario.typeService,
+                                    experience: _usuario.experience,
+                                  ),
+                                  onTap: (){
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context){
+                                          return ShowDialogUsuario(
+                                            nome: _usuario.username,
+                                            cpf: _usuario.cpf,
+                                            bairro: _usuario.professionalBairro,
+                                            uf: _usuario.professionalUf,
+                                            cep: _usuario.professionalCep,
+                                            cidade: _usuario.professionalCidade,
+                                            complemento: _usuario.professionalComplemento,
+                                            logradouro: _usuario.professionalLogradouro,
+                                            numero: _usuario.professionalNumero,
+                                            typeOcupation: _usuario.typeOcupation,
+                                            typeService: _usuario.typeService,
+                                            experience: _usuario.experience,
+                                            controller: controller,
+
+                                          );
+                                        });
+                                  },
                                 ),
                               );
                             }),

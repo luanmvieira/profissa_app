@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:profissa_app/app/models/service_model.dart';
 
 import 'package:profissa_app/app/models/user_model.dart';
 
@@ -18,6 +19,17 @@ class ConexaoFirebaseHome{
       _userList.add(_user);
     }
     return _userList;
+  }
+
+  Future<ServiceModel> getServiceData(String cpf) async {
+    ServiceModel _service = ServiceModel();
+    QuerySnapshot serviceQuery = await _db.collection("servicos").where("cpf", isEqualTo: cpf).get();
+    if(serviceQuery.docs.isNotEmpty){
+      print("não é vazio");
+      _service = ServiceModel.fromMap(serviceQuery.docs.first);
+      print("carregou o usermodel");
+    }
+    return _service;
   }
 
   Future sort(String condicao) async {

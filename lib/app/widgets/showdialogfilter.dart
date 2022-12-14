@@ -47,10 +47,7 @@ class _ShowDialogFilterState extends State<ShowDialogFilter> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                            Icons.filter_list,
-                            color: Colors.white,
-                          ),
+                          SizedBox(width: 30,),
                           Text(
                             "Ordenação",
                             style: GoogleFonts.openSans(
@@ -59,20 +56,15 @@ class _ShowDialogFilterState extends State<ShowDialogFilter> {
                               color: Colors.white,
                             ),
                           ),
-                          IconButton(
-                            splashColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            disabledColor: Colors.transparent,
-                            icon: Icon(
+                          GestureDetector(
+                            child:Icon(
                               Icons.close,
                               color: Colors.white,
                             ),
-                            onPressed: () {
+                            onTap: (){
                               Navigator.of(context).pop();
                             },
-                          ),
+                          )
                         ],
                       ),
                     ),

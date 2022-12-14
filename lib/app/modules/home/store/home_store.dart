@@ -1,9 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mobx/mobx.dart';
+import 'package:profissa_app/app/models/service_model.dart';
 import 'package:profissa_app/app/models/user_model.dart';
 import 'package:profissa_app/app/modules/home/repositories/db_home.dart';
 import 'package:profissa_app/app/modules/login/repositories/db_login.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'home_store.g.dart';
 
@@ -17,9 +20,16 @@ abstract class HomeStoreBase with Store {
   @observable
   bool getValidator = false;
   @observable
+  bool getServicosValidator = false;
+  @observable
   List<UserModel> usuariosList = [];
+  @observable
+  ServiceModel serviceModel = ServiceModel();
+
 
   ConexaoFirebaseHome homeRepositories = ConexaoFirebaseHome();
+
+
 
   List<String> typeSort =[
     'Nome',
@@ -32,6 +42,13 @@ abstract class HomeStoreBase with Store {
     getValidator = true;
     usuariosList = await homeRepositories.getUserData();
     getValidator = false;
+  }
+
+  @action
+  Future <void> getServices(String cpf) async {
+    getServicosValidator = true;
+    serviceModel = await homeRepositories.getServiceData(cpf);
+    getServicosValidator = false;
   }
 
   @action

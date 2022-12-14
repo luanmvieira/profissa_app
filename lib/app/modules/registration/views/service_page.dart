@@ -1,4 +1,6 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -223,6 +225,10 @@ class _ServicePageState extends ModularState<ServicePage, RegistrationStore> {
                                   RegistrationDefaultTextField(
                                       hintText: "Valor do Serviço",
                                       textInputType: TextInputType.number,
+                                      textInputFormatter: [
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        RealInputFormatter(),
+                                      ],
                                       controller:
                                           controller.valueServiceController,
                                       validation: (String value) {
